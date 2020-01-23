@@ -1,0 +1,12 @@
+
+
+/*
+ * This will calculate the determinant of the matrix provided with given length and width.
+ */
+void determinant ( long double **matrix, size_t length, size_t width );
+
+
+/*
+ * This will determine the sign for a row in the provided matrix when calculating determinant
+ */
+int8_t row_inversions ( long double *matrix, size_t length );

@@ -1,1 +1,5 @@
 This application is for farting around and relearning C.
+
+autoreconf --install
+CFLAGS=' -std=c99 --pedantic --pedantic-errors -Wall -Werror -g -O0 '
+./configure CFLAGS="$CFLAGS"
