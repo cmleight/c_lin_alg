@@ -1,3 +1,4 @@
+/* inc/determinants.h.  Generated from determinants.h.in by configure.  */
 
 #ifndef _STD_LIB_INC_H_
 #define _STD_LIB_INC_H_
