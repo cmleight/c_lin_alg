@@ -140,6 +140,7 @@ test_determinant ( int8_t debug  )
     res = lu_determinant ( test_matrix, result );
     LOG_DEBUG ( "Result 2: %Lf\n", *result );
     assert ( *result == 2);
+    assert ( res == 0 );
 
     alloc_matrix ( &test_matrix, 2, 2 );
 
@@ -153,6 +154,7 @@ test_determinant ( int8_t debug  )
     res = lu_determinant ( test_matrix, result );
     LOG_DEBUG ( "Result 2: %Lf\n", *result );
     assert ( *result == -14 );
+    assert ( res == 0 );
 
 
     alloc_matrix ( &test_matrix, 3, 3 );
@@ -168,6 +170,8 @@ test_determinant ( int8_t debug  )
     res = lu_determinant ( test_matrix, result );
     LOG_DEBUG ( "Result 2: %Lf\n", *result );
     assert ( *result == -306 );
+    assert ( res == 0 );
+
     free_matrix ( &test_matrix );
 
 

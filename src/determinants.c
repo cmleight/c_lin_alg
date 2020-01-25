@@ -74,7 +74,7 @@ lu_decomp ( struct matrix* input_matrix, struct matrix** lower, struct matrix** 
                 j_u = length - 1 - j;
                 for ( k = j ; k < length ; k++ )
                   {
-                    k_u = - 1 - k;
+                    k_u = length - 1 - k;
                     lower_matrix[i][k] = base_matrix[i][k] - base_matrix[j][k] * ( base_matrix[i][j] / base_matrix[j][j] );
                     upper_matrix[i_u][k_u] =
                           base_matrix[i_u][k_u] - base_matrix[j_u][k_u] * ( base_matrix[i_u][j_u] / base_matrix[j_u][j_u] );
