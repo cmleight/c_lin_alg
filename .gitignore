@@ -62,3 +62,11 @@ inc/stamp-h4
 src/.deps/
 src/Makefile
 src/main
+COPYING
+Makefile.in
+aclocal.m4
+compile
+configure
+depcomp
+missing
+
