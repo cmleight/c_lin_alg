@@ -7,7 +7,7 @@
 #endif
 
 
-#undef DEBUG
+// #undef DEBUG
 #define DEBUG
 #ifdef DEBUG
     #define LOG_DEBUG printf
@@ -83,9 +83,9 @@ lu_decomp ( struct matrix* input_matrix, struct matrix** lower, struct matrix** 
           }
 #ifdef DEBUG
         printf ( "Lower:\n" );
-        print_matrix( **lower );
+        print_matrix ( **lower );
         printf ( "Upper:\n" );
-        print_matrix( **upper );
+        print_matrix ( **upper );
 #endif
       }
 
