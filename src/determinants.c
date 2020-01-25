@@ -32,9 +32,6 @@ lu_decomp ( struct matrix* input_matrix, struct matrix** lower, struct matrix** 
     int i = 0;
     int j = 0;
     int k = 0;
-    int i_u = 0;
-    int j_u = 0;
-    int k_u = 0;
     long double** lower_matrix;
     long double** upper_matrix;
     long double** base_matrix;
@@ -52,15 +49,14 @@ lu_decomp ( struct matrix* input_matrix, struct matrix** lower, struct matrix** 
     // setup the upper and lower triangle matricies.
     for ( i = 0 ; i < length ; i++ )
       {
-        lower_matrix[0][i] = base_matrix[0][i];
-        upper_matrix[height - 1][i] = base_matrix[height - 1][i];
+        upper_matrix[0][i] = base_matrix[0][i];
+        lower_matrix[i][i] = 1;
       }
 
     // Gaussian Elimination to get the upper and lower triangles.
     for ( j = 0 ; j < length - 1 ; j++ )
       {
-        if ( base_matrix[j][j] == 0 
-              || base_matrix[length - 1 - j][length - 1 - j] == 0 )
+        if ( upper_matrix[j][j] == 0 )
           {
             free_matrix ( lower );
             free_matrix ( upper );
@@ -70,23 +66,38 @@ lu_decomp ( struct matrix* input_matrix, struct matrix** lower, struct matrix** 
           {
             for ( i = j + 1 ; i < height ; i++ )
               {
-                i_u = height - 1 - i;
-                j_u = length - 1 - j;
                 for ( k = j ; k < length ; k++ )
                   {
-                    k_u = length - 1 - k;
-                    lower_matrix[i][k] = base_matrix[i][k] - base_matrix[j][k] * ( base_matrix[i][j] / base_matrix[j][j] );
-                    upper_matrix[i_u][k_u] =
-                          base_matrix[i_u][k_u] - base_matrix[j_u][k_u] * ( base_matrix[i_u][j_u] / base_matrix[j_u][j_u] );
-                  }
-              }
-          }
+                    if ( j == 0 )
+                      {
+                        upper_matrix[i][k] = base_matrix[i][k] - base_matrix[j][k] * ( base_matrix[i][j] / base_matrix[j][j] );
+                      }
+                    else
+                      {
+                        upper_matrix[i][k] = upper_matrix[i][k] - upper_matrix[j][k] * ( upper_matrix[i][j] / upper_matrix[j][j] );
+                      }
+                    if ( k < i )
+                      {
+                        if ( j == 0 )
+                          {
+                            lower_matrix[i][k] =
+                                  base_matrix[i][k] + base_matrix[j][k] * ( base_matrix[i][j] / base_matrix[j][j] );
+                          }
+                        else
+                          {
+                             lower_matrix[i][k] =
+                                  lower_matrix[i][k] + lower_matrix[j][k] * ( lower_matrix[i][j] / lower_matrix[j][j] );
+                          }
+                      }
 #ifdef DEBUG
-        printf ( "Lower:\n" );
-        print_matrix ( **lower );
+        //printf ( "Lower:\n" );
+        //print_matrix ( **lower );
         printf ( "Upper:\n" );
         print_matrix ( **upper );
 #endif
+                  }
+              }
+          }
       }
 
     return 0;

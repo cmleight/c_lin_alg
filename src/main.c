@@ -15,6 +15,9 @@
 #undef TRACE
 #define TRACE
 
+#define loose_assert(target, accuracy, value) \
+    assert( ( value >= ( target - accuracy ) ) && ( value <= ( target + accuracy ) ) )
+
 #ifdef DEBUG
     #define LOG_DEBUG printf
 #else
@@ -139,7 +142,7 @@ test_determinant ( int8_t debug  )
 
     res = lu_determinant ( test_matrix, result );
     LOG_DEBUG ( "Result 2: %Lf\n", *result );
-    assert ( *result == 2);
+    loose_assert ( 2, 0.00005, *result );
     assert ( res == 0 );
 
     alloc_matrix ( &test_matrix, 2, 2 );
@@ -152,8 +155,8 @@ test_determinant ( int8_t debug  )
 #endif
 
     res = lu_determinant ( test_matrix, result );
-    LOG_DEBUG ( "Result 2: %Lf\n", *result );
-    assert ( *result == -14 );
+    LOG_DEBUG ( "Result 3: %Lf\n", *result );
+    loose_assert ( -14, 0.00005, *result );
     assert ( res == 0 );
 
 
@@ -168,8 +171,8 @@ test_determinant ( int8_t debug  )
 #endif
 
     res = lu_determinant ( test_matrix, result );
-    LOG_DEBUG ( "Result 2: %Lf\n", *result );
-    assert ( *result == -306 );
+    LOG_DEBUG ( "Result 4: %Lf\n", *result );
+    loose_assert ( -306, 0.00005, *result );
     assert ( res == 0 );
 
     free_matrix ( &test_matrix );
