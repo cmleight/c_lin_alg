@@ -22,19 +22,19 @@ struct matrix {
  * Allocates memory for a matrix struct with the provided options
  */
 int
-alloc_matrix ( struct matrix* alloc, int64_t length, int64_t width );
+alloc_matrix ( struct matrix** alloc, int64_t length, int64_t width );
 
 /*
  * Re-allocates the matrix to the desired size
  */
 int
-resize_matrix ( struct matrix* alloc, int64_t height, int64_t length );
+resize_matrix ( struct matrix** alloc, int64_t height, int64_t length );
 
 /*
  * Frees the matrix structure
  */
 int
-free_matrix ( struct matrix* alloc );
+free_matrix ( struct matrix** alloc );
 
 void
 print_matrix ( struct matrix matrix );
