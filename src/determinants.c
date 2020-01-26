@@ -7,8 +7,8 @@
 #endif
 
 
-// #undef DEBUG
-#define DEBUG
+#undef DEBUG
+// #define DEBUG
 #ifdef DEBUG
     #define LOG_DEBUG printf
 #else
@@ -56,6 +56,7 @@ lu_decomp ( struct matrix* input_matrix, struct matrix** lower, struct matrix** 
     // Gaussian Elimination to get the upper and lower triangles.
     for ( j = 0 ; j < length - 1 ; j++ )
       {
+        // case where we cant perform LU decomp, but the determinant will be 0
         if ( upper_matrix[j][j] == 0 )
           {
             free_matrix ( lower );
@@ -66,31 +67,40 @@ lu_decomp ( struct matrix* input_matrix, struct matrix** lower, struct matrix** 
           {
             for ( i = j + 1 ; i < height ; i++ )
               {
+                // base case for first iteration, put the modifier in the lower_matrix
                 if ( j == 0 )
                   {
 	            lower_matrix[i][j] = base_matrix[i][j] / base_matrix[j][j];
                   }
+                // case for every other iteration based on upper matrix.
                 else
                   {
                     lower_matrix[i][j] = upper_matrix[i][j] / upper_matrix[j][j];
                   }
+                // calculate the upper matrix values based on the factor we determined in the lower matrix
                 for ( k = length - 1 ; k >= i - 1 ; k-- )
                   {
+                    // We want to create a diagonal upper matrix, so eliminate the lower terms.
+                    // base case for first iteration because we dont do an initial full copy.
                     if ( j == 0 )
                       {
                         upper_matrix[i][k] = base_matrix[i][k] - base_matrix[j][k] * ( base_matrix[i][j] / base_matrix[j][j] );
                       }
+                    // case for every other iteration.
                     else
                       {
                         upper_matrix[i][k] = upper_matrix[i][k] - upper_matrix[j][k] * ( upper_matrix[i][j] / upper_matrix[j][j] );
                       }
+                    // debug per iteration calculation on the upper and lower iteration
                     #ifdef DEBUG
-                    printf ( "Lower:\n" );
-                    print_matrix ( **lower );
                     printf ( "Upper:\n" );
                     print_matrix ( **upper );
                     #endif
                   }
+                #ifdef DEBUG
+                printf ( "Lower:\n" );
+                print_matrix ( **lower );
+                #endif
               }
           }
       }

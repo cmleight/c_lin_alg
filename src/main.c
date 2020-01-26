@@ -12,8 +12,8 @@
 
 
 #define DEBUG
-#undef TRACE
 #define TRACE
+#undef TRACE
 
 #define loose_assert(target, accuracy, value) \
     assert( ( value >= ( target - accuracy ) ) && ( value <= ( target + accuracy ) ) )
@@ -97,12 +97,13 @@ assign_array ( long double **ptr, long double input[], size_t height, size_t row
     }
 }
 
+// test the lu_determinant function for accuracy with examples that we know the answer to.
 void
 test_determinant ( int8_t debug  )
 {
     int res = 0;
     struct matrix* test_matrix = 0;
-    long double accuracy = 00005;
+    long double accuracy = 0.00005;
     long double array_1   [6] = { 1, 2, 3, 4, 5, 6 };
     long double array_2_1 [2] = { 3, 8 };
     long double array_2_2 [2] = { 4, 6 };
@@ -126,7 +127,7 @@ test_determinant ( int8_t debug  )
     assign_array ( test_matrix->matrix, array_1, test_matrix->length, 4 );
     assign_array ( test_matrix->matrix, array_1, test_matrix->length, 5 );
 
-#ifdef TRACE
+#ifdef DEBUG
     print_matrix ( *test_matrix );
 #endif
 
@@ -139,7 +140,7 @@ test_determinant ( int8_t debug  )
     assign_array ( test_matrix->matrix, array_2_1_2, test_matrix->length, 0 );
     assign_array ( test_matrix->matrix, array_2_2_2, test_matrix->length, 1 );
 
-#ifdef TRACE
+#ifdef DEBUG
     print_matrix ( *test_matrix );
 #endif
 
@@ -153,7 +154,7 @@ test_determinant ( int8_t debug  )
     assign_array ( test_matrix->matrix, array_2_1, test_matrix->length, 0 );
     assign_array ( test_matrix->matrix, array_2_2, test_matrix->length, 1 );
 
-#ifdef TRACE
+#ifdef DEBUG
     print_matrix ( *test_matrix );
 #endif
 
@@ -162,13 +163,14 @@ test_determinant ( int8_t debug  )
     loose_assert ( -14, accuracy, *result );
     assert ( res == 0 );
 
+
     alloc_matrix ( &test_matrix, 3, 3 );
 
     assign_array ( test_matrix->matrix, array_3_1, test_matrix->length, 0 );
     assign_array ( test_matrix->matrix, array_3_2, test_matrix->length, 1 );
     assign_array ( test_matrix->matrix, array_3_3, test_matrix->length, 2 );
 
-#ifdef TRACE
+#ifdef DEBUG
     print_matrix ( *test_matrix );
 #endif
 
@@ -184,7 +186,7 @@ test_determinant ( int8_t debug  )
     assign_array ( test_matrix->matrix, array_4_2, test_matrix->length, 1 );
     assign_array ( test_matrix->matrix, array_4_3, test_matrix->length, 2 );
 
-#ifdef TRACE
+#ifdef DEBUG
     print_matrix ( *test_matrix );
 #endif
 
