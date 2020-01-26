@@ -66,7 +66,7 @@ lu_decomp ( struct matrix* input_matrix, struct matrix** lower, struct matrix** 
           {
             for ( i = j + 1 ; i < height ; i++ )
               {
-                for ( k = j ; k < length ; k++ )
+                for ( k = length - 1 ; k >= i - 1 ; k-- )
                   {
                     if ( j == 0 )
                       {
@@ -90,8 +90,8 @@ lu_decomp ( struct matrix* input_matrix, struct matrix** lower, struct matrix** 
                           }
                       }
 #ifdef DEBUG
-        //printf ( "Lower:\n" );
-        //print_matrix ( **lower );
+        printf ( "Lower:\n" );
+        print_matrix ( **lower );
         printf ( "Upper:\n" );
         print_matrix ( **upper );
 #endif

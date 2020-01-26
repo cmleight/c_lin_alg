@@ -113,7 +113,6 @@ test_determinant ( int8_t debug  )
     long double* result = calloc (1, sizeof ( long double ) );
 
     LOG_DEBUG ("Testing Determinant:\n" );
-
     alloc_matrix ( &test_matrix, 6, 6 );
 
     assign_array ( test_matrix->matrix, array_1, test_matrix->length, 0 );
@@ -158,7 +157,6 @@ test_determinant ( int8_t debug  )
     LOG_DEBUG ( "Result 3: %Lf\n", *result );
     loose_assert ( -14, 0.00005, *result );
     assert ( res == 0 );
-
 
     alloc_matrix ( &test_matrix, 3, 3 );
 
