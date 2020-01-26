@@ -102,6 +102,7 @@ test_determinant ( int8_t debug  )
 {
     int res = 0;
     struct matrix* test_matrix = 0;
+    long double accuracy = 00005;
     long double array_1   [6] = { 1, 2, 3, 4, 5, 6 };
     long double array_2_1 [2] = { 3, 8 };
     long double array_2_2 [2] = { 4, 6 };
@@ -110,6 +111,9 @@ test_determinant ( int8_t debug  )
     long double array_3_1 [3] = { 6,  1, 1 };
     long double array_3_2 [3] = { 4, -2, 5 };
     long double array_3_3 [3] = { 2,  8, 7 };
+    long double array_4_1 [3] = {  1, 2,  2 };
+    long double array_4_2 [3] = {  2, 0, -1 };
+    long double array_4_3 [3] = { -2, 1,  3 };
     long double* result = calloc (1, sizeof ( long double ) );
 
     LOG_DEBUG ("Testing Determinant:\n" );
@@ -141,7 +145,7 @@ test_determinant ( int8_t debug  )
 
     res = lu_determinant ( test_matrix, result );
     LOG_DEBUG ( "Result 2: %Lf\n", *result );
-    loose_assert ( 2, 0.00005, *result );
+    loose_assert ( 2, accuracy, *result );
     assert ( res == 0 );
 
     alloc_matrix ( &test_matrix, 2, 2 );
@@ -155,7 +159,7 @@ test_determinant ( int8_t debug  )
 
     res = lu_determinant ( test_matrix, result );
     LOG_DEBUG ( "Result 3: %Lf\n", *result );
-    loose_assert ( -14, 0.00005, *result );
+    loose_assert ( -14, accuracy, *result );
     assert ( res == 0 );
 
     alloc_matrix ( &test_matrix, 3, 3 );
@@ -170,7 +174,23 @@ test_determinant ( int8_t debug  )
 
     res = lu_determinant ( test_matrix, result );
     LOG_DEBUG ( "Result 4: %Lf\n", *result );
-    loose_assert ( -306, 0.00005, *result );
+    loose_assert ( -306, accuracy, *result );
+    assert ( res == 0 );
+
+
+    alloc_matrix ( &test_matrix, 3, 3 );
+
+    assign_array ( test_matrix->matrix, array_4_1, test_matrix->length, 0 );
+    assign_array ( test_matrix->matrix, array_4_2, test_matrix->length, 1 );
+    assign_array ( test_matrix->matrix, array_4_3, test_matrix->length, 2 );
+
+#ifdef TRACE
+    print_matrix ( *test_matrix );
+#endif
+
+    res = lu_determinant ( test_matrix, result );
+    LOG_DEBUG ( "Result 5: %Lf\n", *result );
+    loose_assert ( -3, accuracy, *result );
     assert ( res == 0 );
 
     free_matrix ( &test_matrix );

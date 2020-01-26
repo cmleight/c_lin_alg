@@ -26,6 +26,7 @@ modulo_Euclidean(int64_t a, int64_t b)
     return m;
   }
 
+// TODO: Fix lower decomp.
 int
 lu_decomp ( struct matrix* input_matrix, struct matrix** lower, struct matrix** upper )
   {
@@ -66,6 +67,14 @@ lu_decomp ( struct matrix* input_matrix, struct matrix** lower, struct matrix** 
           {
             for ( i = j + 1 ; i < height ; i++ )
               {
+                if ( j == 0 )
+                  {
+	            lower_matrix[i][j] = base_matrix[i][j] / base_matrix[j][j];
+                  }
+                else
+                  {
+                    lower_matrix[i][j] = upper_matrix[i][j] / upper_matrix[j][j];
+                  }
                 for ( k = length - 1 ; k >= i - 1 ; k-- )
                   {
                     if ( j == 0 )
@@ -75,19 +84,6 @@ lu_decomp ( struct matrix* input_matrix, struct matrix** lower, struct matrix** 
                     else
                       {
                         upper_matrix[i][k] = upper_matrix[i][k] - upper_matrix[j][k] * ( upper_matrix[i][j] / upper_matrix[j][j] );
-                      }
-                    if ( k < i )
-                      {
-                        if ( j == 0 )
-                          {
-                            lower_matrix[i][k] =
-                                  base_matrix[i][k] + base_matrix[j][k] * ( base_matrix[i][j] / base_matrix[j][j] );
-                          }
-                        else
-                          {
-                             lower_matrix[i][k] =
-                                  lower_matrix[i][k] + lower_matrix[j][k] * ( lower_matrix[i][j] / lower_matrix[j][j] );
-                          }
                       }
 #ifdef DEBUG
         printf ( "Lower:\n" );
