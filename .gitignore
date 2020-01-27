@@ -55,10 +55,7 @@ Makefile
 autom4te.cache/
 config.log
 config.status
-inc/stamp-h1
-inc/stamp-h2
-inc/stamp-h3
-inc/stamp-h4
+inc/stamp-h*
 src/.deps/
 src/Makefile
 src/main

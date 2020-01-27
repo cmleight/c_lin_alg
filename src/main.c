@@ -1,5 +1,6 @@
 
 #include <assert.h>
+#include "bench_time.h"
 
 #include "main.h"
 #include "determinants.h"
@@ -102,6 +103,8 @@ void
 test_determinant ( int8_t debug  )
 {
     int res = 0;
+    struct bench_time* start = calloc ( 1, sizeof ( struct bench_time) );
+    struct bench_time* end = calloc ( 1, sizeof ( struct bench_time) );
     struct matrix* test_matrix = 0;
     long double accuracy = 0.00005;
     long double array_1   [6] = { 1, 2, 3, 4, 5, 6 };
@@ -131,7 +134,11 @@ test_determinant ( int8_t debug  )
     print_matrix ( *test_matrix );
 #endif
 
+    set_time ( start );
     res = lu_determinant ( test_matrix, result );
+    set_time ( end );
+    LOG_DEBUG ( "Total time elapsed : %.0Lf ns\n", time_diff ( start, end) );
+
     LOG_DEBUG ( "Result 1: %Lf\n", *result );
     assert ( *result == 0 );
 
@@ -144,7 +151,11 @@ test_determinant ( int8_t debug  )
     print_matrix ( *test_matrix );
 #endif
 
+    set_time ( start );
     res = lu_determinant ( test_matrix, result );
+    set_time ( end );
+    LOG_DEBUG ( "Total time elapsed : %.0Lf ns\n", time_diff ( start, end) );
+
     LOG_DEBUG ( "Result 2: %Lf\n", *result );
     loose_assert ( 2, accuracy, *result );
     assert ( res == 0 );
@@ -158,7 +169,11 @@ test_determinant ( int8_t debug  )
     print_matrix ( *test_matrix );
 #endif
 
+    set_time ( start );
     res = lu_determinant ( test_matrix, result );
+    set_time ( end );
+    LOG_DEBUG ( "Total time elapsed : %.0Lf ns\n", time_diff ( start, end) );
+
     LOG_DEBUG ( "Result 3: %Lf\n", *result );
     loose_assert ( -14, accuracy, *result );
     assert ( res == 0 );
@@ -174,7 +189,11 @@ test_determinant ( int8_t debug  )
     print_matrix ( *test_matrix );
 #endif
 
+    set_time ( start );
     res = lu_determinant ( test_matrix, result );
+    set_time ( end );
+    LOG_DEBUG ( "Total time elapsed : %.0Lf ns\n", time_diff ( start, end) );
+
     LOG_DEBUG ( "Result 4: %Lf\n", *result );
     loose_assert ( -306, accuracy, *result );
     assert ( res == 0 );
@@ -190,13 +209,19 @@ test_determinant ( int8_t debug  )
     print_matrix ( *test_matrix );
 #endif
 
+    set_time ( start );
     res = lu_determinant ( test_matrix, result );
+    set_time ( end );
+    LOG_DEBUG ( "Total time elapsed : %.0Lf ns\n", time_diff ( start, end) );
+
     LOG_DEBUG ( "Result 5: %Lf\n", *result );
     loose_assert ( -3, accuracy, *result );
     assert ( res == 0 );
 
     free_matrix ( &test_matrix );
 
+    free ( start );
+    free ( end );
 
 }
 

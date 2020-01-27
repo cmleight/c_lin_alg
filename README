@@ -1,5 +1,13 @@
 This application is for farting around and relearning C.
 
+The source is C99 compatible, however the time elapse is only accurate to microseconds. If compiled with C11 or higher compatibility, timing accuracy increases to nanoseconds. However be aware that the nanosecond accuracy is approximate, and not perfectly accurate.
+
+For C11 tested with:
+autoreconf --install
+CFLAGS=' -std=c11 --pedantic --pedantic-errors -Wall -Werror -g -O0 '
+./configure CFLAGS="$CFLAGS" CC="$CC"
+
+For C99 tested with:
 autoreconf --install
 CFLAGS=' -std=c99 --pedantic --pedantic-errors -Wall -Werror -g -O0 '
 ./configure CFLAGS="$CFLAGS" CC="$CC"
