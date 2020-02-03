@@ -51,6 +51,7 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
+# Automake components
 Makefile
 autom4te.cache/
 config.log
